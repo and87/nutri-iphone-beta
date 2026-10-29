@@ -1,7 +1,5 @@
 name: Publish Nutri iPhone beta
 on:
-  release:
-    types: [published]
   workflow_dispatch:
     inputs:
       release:
@@ -24,7 +22,7 @@ jobs:
       - name: Download only the public application artifact
         env:
           GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name || inputs.release }}
+          RELEASE_TAG: ${{ inputs.release }}
         run: |
           mkdir -p package site
           gh release download "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --pattern 'nutri-pwa.zip' --pattern 'SHA256SUMS' --dir package
